@@ -473,6 +473,37 @@ const cekwallet = (sessionnya, uniknya, aksestoken) => new Promise((resolve, rej
             // console.log(chalk.red('[!] Failed to save list, boss!'));});
         }else{
             console.log(chalk.green(`[-] Hooray! Your account is LIVE `))
+            const bodlist = await fs.appendFile('live.txt',`${aksestoken}\n`, function (err) {
+        if (err) throw err;
+            console.log(chalk.red('[!] Failed to save list, boss!'));});
+            // - - - REDEEM VOC - - - REDEEM VOC - - - REDEEM VOC - - - REDEEM VOC - - -
+		console.log("");
+		console.log(chalk.yellow("  ----------------------------------------------  "));
+		console.log(chalk.yellow("    Now we will Redeem a Voucher for you Boss!    "));
+		console.log(chalk.yellow("  ----------------------------------------------  "));
+		console.log("")
+		await delay(2000)
+        const kodevoucher = "COBAINGOJEK";
+        const redeem = await functionredeemvoc(kodevoucher, sessionnya, uniknya, aksestoken)
+        console.log(redeem)
+		await delay(2000)
+        if(redeem.success === false){
+            console.log(chalk.red(`[!] ${redeem.errors[0].message}`));
+            }else{
+		console.log(redeem)
+        const pesan = redeem.data.message
+        const yeay = redeem.data.title
+        console.log(chalk.yellow(`[+] ${yeay} ${pesan}`));
+        console.log(chalk.yellow('Your voucher was successfully redeemed!'))
+        }
+		if(jumlahvoucher === 0){
+          console.log(chalk.red("[!] You don't have any voucher yet."))
+        }else{
+        console.log(chalk.yellow(`[+] You have ${jumlahvoucher} vouchers: `))
+        const isivoucher = getdata.data.map(datas => {
+        console.log(chalk.yellow(`[-] ${datas.title} Exp: ${datas.expiry_date}`))
+        })
+        }
         };
 		
 		console.log(chalk.yellow(`[+] Got it! This is your access token : ${aksestoken}`))
